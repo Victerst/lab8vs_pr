@@ -1,0 +1,10 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="50"
+		Width="400" Height="100"
+        x:Class="lab8vs.Views.About"
+        Title="About">
+	    <TextBlock Text="Выполнил студент группы ИП-016 Иванкова Виктория" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+</Window>

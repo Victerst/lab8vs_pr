@@ -1,0 +1,91 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:lab8vs.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:model="using:lab8vs.Models"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
+        x:Class="lab8vs.Views.MainWindow"
+        Title="lab8">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<DockPanel>
+		<Menu DockPanel.Dock="Top" VerticalAlignment="Top">
+			<MenuItem Header="File">
+				<MenuItem Header="New" Name="New"/>
+				<MenuItem Header="Save" Name="Save"/>
+				<MenuItem Header="Load" Name="Load"/>
+				<Separator />
+				<MenuItem Header="Exit" Name="Exit"/>
+			</MenuItem>
+			<MenuItem Header="About" Name="About"/>
+		</Menu>
+
+		<Grid Background="#2b003d" ColumnDefinitions="*,*,*" RowDefinitions="60, *, 60" ShowGridLines="True">
+			<TextBlock Grid.Column="0" Text="Запланировано" Foreground="White" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+			<TextBlock Grid.Column="1" Text="В работе" Foreground="White" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+			<TextBlock Grid.Column="2" Text="Завершено" Foreground="White" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+			<ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="0" Grid.Row="1" Items="{Binding Planned}" AutoScrollToSelectedItem="False">
+				<ListBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type model:KanbanTask}" >
+						<Expander IsExpanded="{Binding IsSelected}" Header="{Binding Header}" HorizontalContentAlignment="Stretch">
+							<StackPanel>
+								<TextBlock Text="Header:" />
+								<TextBox Text="{Binding Header}"/>
+								<TextBlock Text="Description"/>
+								<TextBox Text="{Binding Description}" TextWrapping="NoWrap" AcceptsReturn="True" Height="50"/>
+								<Image Source="{Binding Image}" Height="50"/>
+								<Button Content="Add Image" HorizontalAlignment="Stretch" Command="{Binding $parent[ListBox].VisualRoot.addImage}" CommandParameter="{Binding}"/>
+								<Button Content="Delete Task" HorizontalAlignment="Stretch" Command="{Binding $parent[ListBox].DataContext.deletePlannedTask}" CommandParameter="{Binding}"/>
+							</StackPanel>
+						</Expander>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+			<ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="1" Grid.Row="1" Items="{Binding Processing}" AutoScrollToSelectedItem="False">
+				<ListBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type model:KanbanTask}" >
+						<Expander IsExpanded="{Binding IsSelected}" Header="{Binding Header}" HorizontalContentAlignment="Stretch">
+							<StackPanel>
+								<TextBlock Text="Header:" />
+								<TextBox Text="{Binding Header}"/>
+								<TextBlock Text="Description"/>
+								<TextBox Text="{Binding Description}" TextWrapping="NoWrap" AcceptsReturn="True" Height="50"/>
+								<Image Source="{Binding Image}" Height="50"/>
+								<Button Content="Add Image" HorizontalAlignment="Stretch" Command="{Binding $parent[ListBox].VisualRoot.addImage}" CommandParameter="{Binding}"/>
+								<Button Content="Delete Image" HorizontalAlignment="Stretch" Command="{Binding $parent[ListBox].DataContext.deleteAtWorkTask}" CommandParameter="{Binding}"/>
+							</StackPanel>
+						</Expander>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+			<ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="2" Grid.Row="1" Items="{Binding Done}" AutoScrollToSelectedItem="False">
+				<ListBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type model:KanbanTask}" >
+						<Expander IsExpanded="{Binding IsSelected}" Header="{Binding Header}" HorizontalContentAlignment="Stretch">
+							<StackPanel>
+								<TextBlock Text="Header:" />
+								<TextBox Text="{Binding Header}"/>
+								<TextBlock Text="Description"/>
+								<TextBox Text="{Binding Description}" TextWrapping="NoWrap" AcceptsReturn="True" Height="50"/>
+								<Image Source="{Binding Image}" Height="50"/>
+								<Button Content="Add Image" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding $parent[ListBox].VisualRoot.addImage}" CommandParameter="{Binding}"/>
+								<Button Content="Delete Image" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding $parent[ListBox].DataContext.deleteDoneTask}" CommandParameter="{Binding}"/>
+							</StackPanel>
+						</Expander>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+			<Button Command="{Binding addPlannedTask}" Grid.Column="0" Grid.Row="2" Content="Add" FontSize="23" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#d10031" Foreground="White"/>
+			<Button Command="{Binding addAtWorkTask}" Grid.Column="1" Grid.Row="2" Content="Add" FontSize="23" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#d10031" Foreground="White"/>
+			<Button Command="{Binding addDoneTask}" Grid.Column="2" Grid.Row="2" Content="Add" FontSize="23" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#d10031" Foreground="White"/>
+		</Grid>
+	</DockPanel>
+</Window>
